@@ -1,0 +1,8 @@
+i kapital 5 under gör det själv: 
+i punk 4 Jaga skapade ett nytt VLAN 77 och använde nätet 192.168.9.0/26 som boken säger.
+Jag skapade ett nytt subinterface på routern, GI0/0.77, med ip address 192.168.9.1 som gateway address. jag la till också VLAN 77 på trunkarna med switchport trunk allowed valn add 77.
+jag kopplade en laptor till VLAN 77 och gav den ip adress 192.168.9.2/26 och gateway 192.168.9.1 sedan testade jag att pinga en dator som sitter i VLAN 10 och det fungerade vilket visar att routingen mellan VLAN fungerade.
+efter det tog jag bort gatwayen från laptopen och testade pinga åt både hållen, det fungerade inte. laptopen kunde inte skicka trafik till ett annat nät utan gateway. när datoren i VLAN 10 pingade laptopen kunde trafiken komma till VLAN 77 men laptopen kune inte skicka svaret tillbaka eftersom den saknade sin gateway.
+i punkt 5 när jaag tog bort VLAN 77 från trunkens allowed lista i ena switchen stod routerns sub-interface fortfarande som up/up  i show ip interface brief. Det visar att up/up inte betyder att VLAN trafiken faktiskt kommer fram över trunken.
+i punk6 lade jag till en statisk route 172.16.0.0/16 via 192.168.9.2. routing sågs i show ip route men ping till 172.16.0.1 misslyckades. det visar att en route i routingtabellen inte betyder att destinationen faktiskt går att nå.
+i punk 7 körde jag traceroute 172.16.0.1 och fick bara * * * vilket betyder att traceroute fick inget svar från hoppen. den sttiska routen finns i routingstabellen men det finns ingen fungerande väg vidare till nätet 172.16.0.0/26.
